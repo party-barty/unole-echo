@@ -1,0 +1,76 @@
+I need you to design and build a professional B2B website for Vision Equipment, a manufacturer’s representative firm that has served municipal water and wastewater customers across Texas for nearly 25 years.
+
+Target Audience:
+Engineers (environmental and mechanical), plant managers, superintendents, operators, and maintenance staff from municipalities in Texas.
+
+Website Goals:
+- Provide information about the manufacturers Vision Equipment represents.
+- Demonstrate expertise and credibility in municipal water and wastewater treatment solutions.
+- Generate leads through clear calls-to-action (e.g., contact reps, download resources).
+- Educate engineers and municipal staff through blog posts, project case studies, and manufacturer product information.
+
+# Pages & Requirements:
+1) Home: 
+- Clear overview of Vision Equipment’s value proposition.
+- Primary CTA: Contact a Rep.
+- Secondary CTA: Explore Manufacturers.
+- Brief intro to solutions and process areas.
+
+1) About Vision Equipment: "/about.html"
+- single page template. 
+- suggested sections: Hero (About Vision Equipment); Intro with Featured Stats; Our Story; Our Approach / Process; Industry Leading Manufacturers; Core Values; Meet the Team; Social Proof;
+
+2) Manufacturers: "/manufacturers.html"
+- Grid or list of represented manufacturers with logos, descriptions, core products/solutions, and BABA compliance notes.
+- Links to each manufacturer’s official site.
+
+3) Projects: "/projects.html"
+- Showcase municipal projects, upgrades, and installations across Texas.
+- Each project should highlight the problem, solution, and equipment provided.
+
+4) Blog (Archive): "/blog.html"
+- Organized by category (e.g., Headworks, Aeration, Clarification, Solids Handling, Disinfection, Optimization).
+- Designed for SEO and easy browsing.
+
+5) Blog Post (Single Template): "/blog/single-post-demo.html"
+- Optimized layout with featured image, headings, CTAs (e.g., “Contact a Rep” or “View Related Manufacturers”).
+- sidebar on right with Recent Updates and Categories list.
+- show Breadcrumbs before the main post content. ex: "Blog > {Primary Category}"
+
+6) Contact Us
+- Contact form with fields (Name, Email, Company/Utility, Role, Message).
+- Schema markup for Local Business/Contact Page.
+- Clear CTA to connect with sales reps.
+
+7) Privacy Policy
+- reuse the main body cotent from https://visionequipment.net/privacy-policy/
+
+8) Landing Page
+- CTA: Download our white paper “How to Reduce Operating Costs by Retrofitting Wastewater Treatment Equipment.”
+- main content is 2 columns. Left column has main body text. Right column always contains a lead form to capture Name, Email, Company, and Role before download.
+- Persuasive copy targeting engineers and plant managers.
+
+
+Tone & Style:
+- Professional, technical, and engineer-focused.
+- Clear, concise, and skimmable.
+- Incorporate trust signals: years in business, Texas focus, and manufacturer partnerships.
+- Avoid overly salesy language; emphasize technical expertise and reliability.
+
+Additional Notes:
+- Use a clean, modern design with blues, greys, and water-inspired accents.
+- Ensure responsive design for mobile and tablet.
+- SEO optimized with structured headings, metadata, and schema.
+- Accessibility best practices followed.
+- it looks like the class "bg-primary" is not working yet or has not been styled. can we set the property "background" equal to the value of the "colors.primary" attribute in tailwind theme?
+- is tailwind imported to every page or just homepage? it looks like its not working on Manufacturers and Projects
+
+
+Suggested H2 Structure for "About" page: 
+- H2: Proven Process Solutions for Texas Water & Wastewater
+- H2: Our Story
+- H2: Our Approach
+- H2: Partners Who Invented Their Markets
+- H2: Our Values
+- H2: Meet the Team
+- H2: Trusted by Texas Municipalities Since 2003
