@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACFC 2026 Prediction Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --ac-pink: #FF007F;
+            --ac-cyan: #00E5FF;
+            --ac-lime: #76FF03;
+            --ac-bg: #0d0d12;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ac-bg);
+            color: #f1f5f9;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Big Shoulders Display', cursive;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Standardized Bold Styling replaces the redundant JS engine */
+        strong {
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(22, 22, 28, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--ac-pink);
+            box-shadow: 0 10px 30px -10px rgba(255, 0, 127, 0.3);
+        }
+
+        /* Benchmarking Table Styles */
+        .stat-table { width: 100%; font-size: 0.75rem; text-align: left; }
+        .stat-table th { color: var(--ac-cyan); padding: 8px; text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .stat-table td { padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .acfc-row { background: rgba(255, 0, 127, 0.15); font-weight: 800; }
+
+        .hint-emoji { font-size: 2.5rem; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)); }
+        .market-tag { font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.1); color: #ccc; font-weight: 800; text-transform: uppercase; }
+        .guess-rank { font-size: 0.65rem; font-weight: 900; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 6px; }
+        
+        /* Tab Styling */
+.year-tab {
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.year-tab.active {
+    color: var(--ac-pink);
+    background: rgba(255, 0, 127, 0.1);
+    border-top-color: var(--ac-pink);
+}
+
+/* Ensure the table card feels connected to the tabs */
+#benchmarking .glass-card {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-4xl font-black italic">ACFC <span class="text-[--ac-pink]">OFFSEASON TRACKER</span></h1>
+                <p class="text-[10px] tracking-[0.4em] text-[--ac-cyan] font-bold uppercase">2026 Recruitment Intelligence</p>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm font-bold">
+                <a href="#strategy" class="hover:text-[--ac-pink] transition">STRATEGY</a>
+                <a href="#benchmarking" class="hover:text-[--ac-pink] transition">STATS</a>
+                <a href="#roster" class="hover:text-[--ac-pink] transition">ROSTER</a>
+                <a href="#reservoir" class="hover:text-[--ac-pink] transition uppercase">Reservoir</a>
+                <a href="#teasers" class="hover:text-[--ac-pink] transition text-[--ac-lime]">5 HINTS</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 space-y-20">
+
+        <!-- 1. Strategy -->
+        <section id="strategy" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a1a24] to-[#0d0d12] p-8 md:p-12 border border-gray-800">
+            <div class="relative z-10 max-w-3xl">
+                <h2 class="text-6xl font-black mb-6 leading-none italic">2026: A YEAR FOR <br/><span class="text-[--ac-pink]">REBUILDING</span></h2>
+                <div class="space-y-4 text-gray-400 leading-relaxed text-lg">
+                    <p>The 2025-2026 offseason represents a <strong>mandatory pivot point</strong> for Angel City FC. Following an 11th-place finish and a <strong>-10 goal differential</strong>, the club is moving away from reliance on veteran icons toward a more <strong>balanced, technically proficient core</strong>.</p>
+                    <p>With the <strong>abolition of the NWSL Draft</strong>, ACFC is aggressively entering a globalized free-market environment, leveraging its commercial prestige to secure elite talent from <strong>Japan, Brazil, and the domestic NCAA</strong> circuit.</p>
+                </div>
+            </div>
+            <div class="absolute -right-20 -top-20 w-96 h-96 bg-[--ac-pink] opacity-5 rounded-full blur-3xl"></div>
+        </section>
+
+        <!-- 2. League Benchmarking -->
+<section id="benchmarking" class="space-y-6">
+    <div class="text-center">
+        <h2 class="text-6xl font-black italic">LEAGUE <span class="text-[--ac-cyan]">BENCHMARKING</span></h2>
+        <p class="text-gray-500 uppercase tracking-widest text-sm font-bold">Performance Matrix by Season</p>
+    </div>
+
+    <div class="flex items-center gap-1 overflow-x-auto pb-2 border-b border-gray-800">
+        <button onclick="updateYear(0, this)" class="year-tab px-6 py-2 text-xs font-black uppercase tracking-tighter border-t-2 border-transparent transition-all hover:bg-white/5 active">2022</button>
+        <button onclick="updateYear(1, this)" class="year-tab px-6 py-2 text-xs font-black uppercase tracking-tighter border-t-2 border-transparent transition-all hover:bg-white/5">2023</button>
+        <button onclick="updateYear(2, this)" class="year-tab px-6 py-2 text-xs font-black uppercase tracking-tighter border-t-2 border-transparent transition-all hover:bg-white/5">2024</button>
+        <button onclick="updateYear(3, this)" class="year-tab px-6 py-2 text-xs font-black uppercase tracking-tighter border-t-2 border-transparent transition-all hover:bg-white/5">2025</button>
+    </div>
+
+    <div class="glass-card p-8 rounded-b-3xl overflow-x-auto border-t-0">
+        <h3 id="currentYearTitle" class="text-2xl font-bold mb-6 italic text-[--ac-cyan]">2022 Season Standings</h3>
+        <table class="stat-table">
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Points</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>T</th>
+                    <th>GF</th>
+                    <th>GA</th>
+                    <th>GD</th>
+                </tr>
+            </thead>
+            <tbody id="statTableBody">
+                </tbody>
+        </table>
+    </div>
+</section>
+
+        <!-- 3. Roster Audit -->
+        <section id="roster" class="space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-4 border-l-4 border-[--ac-cyan] pl-6">
+                <div>
+                    <h2 class="text-5xl font-black">ROSTER AUDIT</h2>
+                    <p class="text-gray-500 uppercase tracking-widest text-sm font-bold">The Departure Drain vs. Active Personnel</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-center">
+                        <p class="text-3xl font-black text-white">11</p>
+                        <p class="text-[10px] text-gray-500 uppercase">Active</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-3xl font-black text-[--ac-pink]">16</p>
+                        <p class="text-[10px] text-gray-500 uppercase">Departed</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 glass-card p-6 rounded-2xl h-[400px]">
+                    <canvas id="rosterChart"></canvas>
+                </div>
+                <div class="space-y-4">
+                    <div class="glass-card p-4 rounded-xl border-l-4 border-amber-500">
+                        <h4 class="font-bold text-amber-500 italic uppercase">Critical Vacancy: Defense</h4>
+                        <p class="text-xs text-gray-400 mt-1">Conceded <strong>41 goals</strong> in 2025. With <strong>Reid, Riley, and Kennedy</strong> gone, the burden falls on <strong>Sarah Gorden</strong> and <strong>Gisele Thompson</strong>. A senior CB is mandatory.</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border-l-4 border-[--ac-pink]">
+                        <h4 class="font-bold text-[--ac-pink] italic uppercase">Goal Production Void</h4>
+                        <p class="text-xs text-gray-400 mt-1">Shot percentage was a league-low <strong>.080</strong>. Retirement of <strong>Christen Press</strong> leaves an <strong>8-goal vacuum</strong> that must be filled by a marquee "9".</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border-l-4 border-[--ac-cyan]">
+                        <h4 class="font-bold text-[--ac-cyan] italic uppercase">GK Depth</h4>
+                        <p class="text-xs text-gray-400 mt-1">Departure of **Stambaugh** leaves only **Anderson** and **Seabert**. A third keeper is required for competition.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Global Talent Reservoir (4 Columns) -->
+        <section id="reservoir" class="space-y-8">
+            <h2 class="text-5xl font-black text-center italic">GLOBAL TALENT RESERVOIR</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <!-- Column 1: Western Markets -->
+                <div class="glass-card p-6 rounded-3xl">
+                    <div class="w-12 h-1 bg-[--ac-lime] mb-4"></div>
+                    <h3 class="text-2xl text-white mb-4">WESTERN (NWSL/EU)</h3>
+                    <ul class="space-y-4 text-sm bold-target">
+                        <li>
+                            <span class="market-tag">Trade Target</span><br/>
+                            **Michelle Cooper** (KC Current) - High-speed vertical threat.
+                        </li>
+                        <li>
+                            <span class="market-tag">Free Agent</span><br/>
+                            **Emily Sams** (Pride) - The premier defensive shield in the league.
+                        </li>
+                        <li>
+                            <span class="market-tag">Europe</span><br/>
+                            **Fran Kirby** (WSL) - Creative engine seeking lifestyle move.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 2: Japanese -->
+                <div class="glass-card p-6 rounded-3xl">
+                    <div class="w-12 h-1 bg-[--ac-cyan] mb-4"></div>
+                    <h3 class="text-2xl text-white mb-4">JAPANESE (WE LEAGUE)</h3>
+                    <ul class="space-y-4 text-sm bold-target">
+                        <li>
+                            <span class="market-tag">Urawa Reds</span><br/>
+                            **Hikaru Naomoto** - Veteran tactical anchor with trophy pedigree.
+                        </li>
+                        <li>
+                            <span class="market-tag">INAC Kobe</span><br/>
+                            **Mina Tanaka** - Proven international scorer with hold-up play.
+                        </li>
+                        <li>
+                            <span class="market-tag">Defender</span><br/>
+                            **Rion Ishikawa** - Young ball-playing CB prospect.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 3: Brazilian -->
+                <div class="glass-card p-6 rounded-3xl">
+                    <div class="w-12 h-1 bg-[--ac-pink] mb-4"></div>
+                    <h3 class="text-2xl text-white mb-4">BRAZILIAN (BRASILEIRÃO)</h3>
+                    <ul class="space-y-4 text-sm bold-target">
+                        <li>
+                            <span class="market-tag">Corinthians</span><br/>
+                            **Duda Sampaio** - The technical magician with elite passing range.
+                        </li>
+                        <li>
+                            <span class="market-tag">Palmeiras</span><br/>
+                            **Ary Borges** - Box-to-box dominance and high work-rate.
+                        </li>
+                        <li>
+                            <span class="market-tag">GK</span><br/>
+                            **Lorena** - High-profile shot-stopper with huge wingspan.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Column 4: Next Gen -->
+                <div class="glass-card p-6 rounded-3xl border-l-2 border-[--ac-cyan]/20">
+                    <div class="w-12 h-1 bg-white mb-4"></div>
+                    <h3 class="text-2xl text-white mb-4">NEXT GEN (NCAA/YNT)</h3>
+                    <ul class="space-y-4 text-sm bold-target">
+                        <li>
+                            <span class="market-tag text-white bg-[--ac-pink]/40">NCAA</span><br/>
+                            **Izzy Engle** (Notre Dame) - Most clinical finisher in college.
+                        </li>
+                        <li>
+                            <span class="market-tag text-white bg-[--ac-pink]/40">NCAA</span><br/>
+                            **Elise Evans** (Stanford) - Composed ball-playing CB.
+                        </li>
+                        <li>
+                            <span class="market-tag text-white bg-[--ac-cyan]/40">USWYNT</span><br/>
+                            **Mia Minestrella** (Duke) - Local winger/MF and elite creative.
+                        </li>
+                        <li>
+                            <span class="market-tag text-white bg-[--ac-cyan]/40">USWYNT</span><br/>
+                            **Emerick Fennell** - High-ceiling defender with 1v1 speed.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. The January Five Hints Matrix -->
+        <section id="teasers" class="space-y-12">
+            <div class="text-center">
+                <h2 class="text-6xl font-black italic">THE JANUARY FIVE</h2>
+                <p class="text-gray-500 uppercase tracking-widest text-sm font-bold">Decoding the Social Media Intelligence</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <!-- Hint 1 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col">
+                    <p class="text-[10px] font-bold text-gray-500 mb-4 uppercase">Jan 6</p>
+                    <div class="hint-emoji self-center mb-6">🇧🇷🎩</div>
+                    <div class="space-y-2 mb-6 text-xs bold-target">
+                        <div class="flex items-center"><span class="guess-rank bg-[--ac-pink] text-white">1</span> **Duda Sampaio**</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">2</span> Ary Borges</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">3</span> Kerolin</div>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-800 bold-target">
+                        <p class="text-[9px] text-[--ac-pink] font-bold uppercase mb-2">Reasoning</p>
+                        <p class="text-[10px] leading-relaxed text-gray-400 italic">The "Magician" (🎩) emoji is the standard Brazilian descriptor for a creative pivot. **Sampaio** fits the technical profile ACFC needs to solve their build-up issues.</p>
+                    </div>
+                </div>
+
+                <!-- Hint 2 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col">
+                    <p class="text-[10px] font-bold text-gray-500 mb-4 uppercase">Jan 7</p>
+                    <div class="hint-emoji self-center mb-6">🍒💣</div>
+                    <div class="space-y-2 mb-6 text-xs bold-target">
+                        <div class="flex items-center"><span class="guess-rank bg-[--ac-pink] text-white">1</span> **Michelle Cooper**</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">2</span> Karsyn Cherry</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">3</span> Trinity Byars</div>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-800 bold-target">
+                        <p class="text-[9px] text-[--ac-pink] font-bold uppercase mb-2">Reasoning</p>
+                        <p class="text-[10px] leading-relaxed text-gray-400 italic">"Cherry Bomb" likely refers to a high-explosive asset acquired via a trade for a "Cherry" pick. **Cooper** provides world-class verticality.</p>
+                    </div>
+                </div>
+
+                <!-- Hint 3 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col">
+                    <p class="text-[10px] font-bold text-gray-500 mb-4 uppercase">Jan 7</p>
+                    <div class="hint-emoji self-center mb-6">💙😈➡️🪽</div>
+                    <div class="space-y-2 mb-6 text-xs bold-target">
+                        <div class="flex items-center"><span class="guess-rank bg-[--ac-pink] text-white">1</span> **Mia Minestrella**</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">2</span> Maggie Graham</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">3</span> Kat Rader</div>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-800 bold-target">
+                        <p class="text-[9px] text-[--ac-pink] font-bold uppercase mb-2">Reasoning</p>
+                        <p class="text-[10px] leading-relaxed text-gray-400 italic">A Duke Blue Devil (💙😈) becoming an Angel (🪽). Local star **Minestrella** is the perfect marketing and tactical centerpiece.</p>
+                    </div>
+                </div>
+
+                <!-- Hint 4 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col">
+                    <p class="text-[10px] font-bold text-gray-500 mb-4 uppercase">Jan 8</p>
+                    <div class="hint-emoji self-center mb-6">🍢🏆</div>
+                    <div class="space-y-2 mb-6 text-xs bold-target">
+                        <div class="flex items-center"><span class="guess-rank bg-[--ac-pink] text-white">1</span> **Hikaru Naomoto**</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">2</span> Mina Tanaka</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">3</span> Jun Endo</div>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-800 bold-target">
+                        <p class="text-[9px] text-[--ac-pink] font-bold uppercase mb-2">Reasoning</p>
+                        <p class="text-[10px] leading-relaxed text-gray-400 italic">The "Oden" (🍢) culinary nod points to a Japanese cultural icon. **Naomoto** is a serial winner with Urawa Reds.</p>
+                    </div>
+                </div>
+
+                <!-- Hint 5 -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col">
+                    <p class="text-[10px] font-bold text-gray-500 mb-4 uppercase">Jan 9</p>
+                    <div class="hint-emoji self-center mb-6">🛡️🇺🇸</div>
+                    <div class="space-y-2 mb-6 text-xs bold-target">
+                        <div class="flex items-center"><span class="guess-rank bg-[--ac-pink] text-white">1</span> **Emily Sams**</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">2</span> Naomi Girma</div>
+                        <div class="flex items-center opacity-60"><span class="guess-rank bg-gray-700 text-white">3</span> Elise Evans</div>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-800 bold-target">
+                        <p class="text-[9px] text-[--ac-pink] font-bold uppercase mb-2">Reasoning</p>
+                        <p class="text-[10px] leading-relaxed text-gray-400 italic">"Shield" (🛡️) refers to the 2024 NWSL Shield winner. **Sams** is the elite anchor required to modernize the ACFC defense.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Keys to Success -->
+        <section id="keys-to-success" class="space-y-12">
+            <div class="text-center">
+                <h2 class="text-7xl font-black italic leading-tight">KEYS TO <span class="text-[--ac-lime]">2026 SUCCESS</span></h2>
+                <p class="text-gray-500 uppercase tracking-[0.3em] text-sm font-bold">Strategic Tactical RoadMap</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 bold-target">
+                <div class="glass-card p-10 rounded-[3rem] border-b-4 border-[--ac-lime]">
+                    <div class="text-5xl mb-6">🎯</div>
+                    <h3 class="text-3xl font-black italic mb-4">The Finish Rate</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">ACFC was **dead last** in conversion. Success depends on clinical targets like **Michelle Cooper** and **Minestrella** raising efficiency by **10%**.</p>
+                </div>
+                <div class="glass-card p-10 rounded-[3rem] border-b-4 border-[--ac-pink]">
+                    <div class="text-5xl mb-6">🛡️</div>
+                    <h3 class="text-3xl font-black italic mb-4">Defensive Anchor</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Fixing the **-20 Total GD** requires an elite CB. **Emily Sams** or **Elise Evans** provide the "Shield" to protect high-line exposures.</p>
+                </div>
+                <div class="glass-card p-10 rounded-[3rem] border-b-4 border-[--ac-cyan]">
+                    <div class="text-5xl mb-6">🪄</div>
+                    <h3 class="text-3xl font-black italic mb-4">Midfield Tempo</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Transitioning to **technical build-up** with **Duda Sampaio**. Possession becomes the primary defense, ending the chaotic transitions of 2025.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 border-t border-gray-900 text-center opacity-40">
+        <p class="text-[10px] tracking-[0.5em] uppercase italic">Angel City FC // Recruitment Analysis v1.1.0</p>
+    </footer>
+
+<script>
+    /**
+     * DATA ENGINE: Consolidated League & Roster Information
+     */
+    const leagueData = [
+        { name: "Angel City FC", pts: [29, 31, 24, 22], w: [8, 8, 6, 7], l: [9, 7, 14, 12], t: [5, 7, 6, 7], gf: [23, 31, 24, 29], ga: [27, 30, 42, 41] },
+        { name: "Orlando Pride", pts: [22, 31, 28, 60], w: [5, 10, 7, 18], l: [10, 11, 8, 2], t: [7, 1, 7, 6], gf: [22, 27, 26, 43], ga: [36, 28, 28, 20] },
+        { name: "KC Current", pts: [36, 26, 38, 55], w: [10, 8, 11, 16], l: [6, 12, 10, 3], t: [6, 2, 5, 7], gf: [29, 30, 44, 57], ga: [29, 36, 38, 31] },
+        { name: "Washington Spirit", pts: [19, 26, 36, 56], w: [3, 7, 10, 18], l: [9, 10, 10, 6], t: [10, 5, 6, 2], gf: [26, 26, 36, 51], ga: [33, 29, 39, 28] },
+        { name: "Gotham FC", pts: [13, 31, 38, 56], w: [4, 8, 11, 17], l: [17, 7, 10, 4], t: [1, 7, 5, 5], gf: [16, 25, 25, 41], ga: [46, 24, 24, 20] },
+        { name: "Portland Thorns", pts: [39, 35, 36, 34], w: [10, 10, 10, 10], l: [3, 7, 10, 12], t: [9, 5, 6, 4], gf: [43, 42, 42, 37], ga: [18, 32, 32, 35] },
+        { name: "San Diego Wave", pts: [36, 37, 34, 25], w: [10, 11, 10, 6], l: [6, 7, 12, 13], t: [6, 4, 4, 7], gf: [32, 31, 31, 24], ga: [21, 22, 22, 35] },
+        { name: "NC Courage", pts: [32, 33, 36, 39], w: [9, 9, 10, 12], l: [8, 7, 10, 11], t: [5, 6, 6, 3], gf: [46, 37, 37, 34], ga: [33, 22, 22, 31] },
+        { name: "Chicago Red Stars", pts: [33, 24, 30, 32], w: [9, 7, 7, 10], l: [7, 12, 10, 14], t: [6, 3, 9, 2], gf: [34, 28, 28, 31], ga: [26, 50, 50, 38] },
+        { name: "Racing Louisville", pts: [23, 27, 28, 28], w: [5, 6, 6, 7], l: [9, 7, 10, 12], t: [8, 9, 10, 7], gf: [23, 25, 25, 33], ga: [35, 24, 24, 37] },
+        { name: "Houston Dash", pts: [36, 26, 24, 20], w: [10, 6, 5, 5], l: [6, 8, 12, 16], t: [6, 8, 9, 5], gf: [35, 25, 25, 20], ga: [27, 23, 23, 42] },
+        { name: "OL Reign", pts: [40, 32, 28, 23], w: [11, 9, 8, 6], l: [4, 8, 14, 15], t: [7, 5, 4, 5], gf: [32, 29, 29, 27], ga: [19, 24, 24, 44] },
+        { name: "Bay FC", pts: [0, 0, 0, 34], w: [0, 0, 0, 11], l: [0, 0, 0, 14], t: [0, 0, 0, 1], gf: [0, 0, 0, 31], ga: [0, 0, 0, 41] },
+        { name: "Utah Royals", pts: [0, 0, 0, 25], w: [0, 0, 0, 7], l: [0, 0, 0, 15], t: [0, 0, 0, 4], gf: [0, 0, 0, 22], ga: [0, 0, 0, 40] }
+    ];
+
+    /**
+     * BOLDING ENGINE: Converts **text** to styled <strong>
+     * Runs once on load across the entire body
+     */
+    function processBolding() {
+        const body = document.body;
+        // Regex: Finds text between double asterisks
+        const boldRegex = /\*\*(.*?)\*\*/g;
+        body.innerHTML = body.innerHTML.replace(boldRegex, '<strong>$1</strong>');
+    }
+
+    /**
+     * STATS ENGINE: Handles Year Switching & Sorting
+     * @param {number} index - 0:2022, 1:2023, 2:2024, 3:2025
+     * @param {HTMLElement} btn - The clicked tab button
+     */
+    function updateYear(index, btn) {
+        const years = ['2022', '2023', '2024', '2025'];
+        const tableBody = document.getElementById('statTableBody');
+        const title = document.getElementById('currentYearTitle');
+
+        // Toggle Active UI States
+        document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+
+        title.innerText = `${years[index]} Season Standings`;
+        tableBody.innerHTML = '';
+
+        // Sort Descending by Points for the selected year
+        const sorted = [...leagueData].sort((a, b) => b.pts[index] - a.pts[index]);
+
+        sorted.forEach(team => {
+            // Exclude expansion teams if they didn't exist in the selected year
+            if (team.pts[index] === 0 && (team.name === "Bay FC" || team.name === "Utah Royals")) return;
+
+            const gd = team.gf[index] - team.ga[index];
+            const row = document.createElement('tr');
+            if (team.name === "Angel City FC") row.className = "acfc-row";
+
+            row.innerHTML = `
+                <td>${team.name}</td>
+                <td><strong>${team.pts[index]}</strong></td>
+                <td>${team.w[index]}</td>
+                <td>${team.l[index]}</td>
+                <td>${team.t[index]}</td>
+                <td>${team.gf[index]}</td>
+                <td>${team.ga[index]}</td>
+                <td class="${gd >= 0 ? 'text-green-400' : 'text-red-400'} font-bold">${gd}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    /**
+     * ROSTER ENGINE: Chart.js Initialization
+     */
+    function initRosterChart() {
+        const canvas = document.getElementById('rosterChart');
+        if (!canvas) return;
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards'],
+                datasets: [
+                    { 
+                        label: 'Active Roster', 
+                        data: [2, 4, 6, 8], 
+                        backgroundColor: '#00E5FF', 
+                        borderRadius: 6 
+                    },
+                    { 
+                        label: '2026 Deficit', 
+                        data: [2, 7, 3, 4], 
+                        backgroundColor: '#FF007F', 
+                        borderRadius: 6 
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Inter', weight: 600 } } },
+                    y: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } }
+                },
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#f1f5f9', font: { family: 'Big Shoulders Display', size: 14 } } }
+                }
+            }
+        });
+    }
+
+    /**
+     * APP INITIALIZER
+     */
+    window.onload = function() {
+        // Run markdown-style bolding first
+        processBolding();
+        
+        // Initialize stats table (Default to 2025)
+        const tabs = document.querySelectorAll('.year-tab');
+        updateYear(3, tabs[3]);
+
+        // Initialize Roster visualization
+        initRosterChart();
+    };
+</script>
+    
+</body>
+</html>
